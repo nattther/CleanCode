@@ -1,5 +1,7 @@
 import assert from "assert";
-import { Guerrier, Mage, Voleur } from "../Personnage/personnage";
+import { Voleur } from "../Personnage/Voleur";
+import { Mage } from "../Personnage/Mage";
+import { Guerrier } from "../Personnage/Guerrier";
 
 /**
  * Teste la création d'un Guerrier avec un nom valide.
@@ -12,6 +14,8 @@ function testValidCharacterCreationGuerrier(): void {
     assert.strictEqual(guerrier.nom, nomValide, "Le nom doit être 'Arthur'");
     
     // Vérification des statistiques initiales du Guerrier.
+    // A la place creer une fake classe guerrier pour enlever toute les lignes 
+    // inventaire plus explicite 
     assert.strictEqual(guerrier.stats.force, 15, "Force attendue: 15");
     assert.strictEqual(guerrier.stats.intelligence, 5, "Intelligence attendue: 5");
     assert.strictEqual(guerrier.stats.defense, 12, "Défense attendue: 12");

@@ -1,5 +1,8 @@
 import readline from "readline";
-import { Guerrier, Mage, Voleur, PersonnageConstructor } from "../Personnage/personnage";
+import { PersonnageConstructor } from "../Personnage/personnage";
+import { Voleur } from "./Voleur";
+import { Mage } from "./Mage";
+import { Guerrier } from "./Guerrier";
 
 export function lancerCreationPersonnage(): void {
     const classOptions: { [key: string]: { name: string; constructeur: PersonnageConstructor } } = {
