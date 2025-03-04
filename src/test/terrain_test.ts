@@ -6,7 +6,16 @@ import { CellContent } from "../Terrain/case";
  * Teste que la grille créée a bien le nombre de lignes et de colonnes spécifié.
  */
 function testTerrainDimensions(): void {
-    const config: TerrainConfig = { rows: 6, cols: 6, wallProbability: 0.5 };
+    const config: TerrainConfig = { 
+        rows: 6, 
+        cols: 6,
+        contentProbabilities: { // Distribution quelconque valide
+            Vide: 0.5,
+            Monstre: 0.1,
+            Tresor: 0.2,
+            Mur: 0.2,
+        }
+    };
     const terrain = new Terrain(config);
     const grid = terrain.getGrid();
     assert.strictEqual(grid.length, 6, "Le nombre de lignes doit être 6.");
@@ -17,36 +26,49 @@ function testTerrainDimensions(): void {
 }
 
 /**
- * Teste qu'un terrain vide (wallProbability = 0) n'a aucun mur sur aucune case.
+ * Teste qu'un terrain configuré sans mur (Mur à 0) produit uniquement des cases non mur.
+ * Ici, on force toutes les cases à être 'Vide'.
  */
 function testEmptyTerrain(): void {
-    const config: TerrainConfig = { rows: 3, cols: 3, wallProbability: 0 };
+    const config: TerrainConfig = { 
+        rows: 3, 
+        cols: 3, 
+        contentProbabilities: {
+            Vide: 1,
+            Monstre: 0,
+            Tresor: 0,
+            Mur: 0,
+        }
+    };
     const terrain = new Terrain(config);
     const grid = terrain.getGrid();
     grid.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
-            assert.strictEqual(cell.blockedUp, false, `La case (${rowIndex}, ${colIndex}) ne doit pas avoir de mur en haut.`);
-            assert.strictEqual(cell.blockedDown, false, `La case (${rowIndex}, ${colIndex}) ne doit pas avoir de mur en bas.`);
-            assert.strictEqual(cell.blockedLeft, false, `La case (${rowIndex}, ${colIndex}) ne doit pas avoir de mur à gauche.`);
-            assert.strictEqual(cell.blockedRight, false, `La case (${rowIndex}, ${colIndex}) ne doit pas avoir de mur à droite.`);
+            assert.strictEqual(cell.content, CellContent.Vide, `La case (${rowIndex}, ${colIndex}) doit être vide.`);
         });
     });
     console.log("Test du terrain vide (sans murs) réussi.");
 }
 
 /**
- * Teste qu'un terrain avec wallProbability = 1 a tous ses murs activés.
+ * Teste qu'un terrain configuré avec une probabilité maximale pour les murs produit uniquement des cases mur.
  */
 function testFullyBlockedTerrain(): void {
-    const config: TerrainConfig = { rows: 3, cols: 3, wallProbability: 1 };
+    const config: TerrainConfig = { 
+        rows: 3, 
+        cols: 3, 
+        contentProbabilities: {
+            Vide: 0,
+            Monstre: 0,
+            Tresor: 0,
+            Mur: 1,
+        }
+    };
     const terrain = new Terrain(config);
     const grid = terrain.getGrid();
     grid.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
-            assert.strictEqual(cell.blockedUp, true, `La case (${rowIndex}, ${colIndex}) doit avoir un mur en haut.`);
-            assert.strictEqual(cell.blockedDown, true, `La case (${rowIndex}, ${colIndex}) doit avoir un mur en bas.`);
-            assert.strictEqual(cell.blockedLeft, true, `La case (${rowIndex}, ${colIndex}) doit avoir un mur à gauche.`);
-            assert.strictEqual(cell.blockedRight, true, `La case (${rowIndex}, ${colIndex}) doit avoir un mur à droite.`);
+            assert.strictEqual(cell.content, CellContent.Mur, `La case (${rowIndex}, ${colIndex}) doit être un mur.`);
         });
     });
     console.log("Test du terrain avec murs partout réussi.");
@@ -56,7 +78,16 @@ function testFullyBlockedTerrain(): void {
  * Vérifie que le contenu de chaque case appartient bien à l'énumération CellContent.
  */
 function testValidCellContent(): void {
-    const config: TerrainConfig = { rows: 3, cols: 3, wallProbability: 0.5 };
+    const config: TerrainConfig = { 
+        rows: 3, 
+        cols: 3, 
+        contentProbabilities: { 
+            Vide: 0.5, 
+            Monstre: 0.1, 
+            Tresor: 0.2, 
+            Mur: 0.2,
+        }
+    };
     const terrain = new Terrain(config);
     const grid = terrain.getGrid();
     const validContents = Object.values(CellContent);

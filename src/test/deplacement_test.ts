@@ -6,7 +6,7 @@ import { CellContent } from "../Terrain/case";
 
 /**
  * Fonction utilitaire pour créer un terrain avec toutes les cases forcées à être vides.
- * On définit wallProbability à 0 et contentProbabilities pour forcer des cases vides.
+ * On fixe la probabilité d'un mur à 0 dans contentProbabilities.
  *
  * @param rows Nombre de lignes.
  * @param cols Nombre de colonnes.
@@ -16,11 +16,11 @@ function createEmptyTerrain(rows: number, cols: number): Terrain {
   const config: TerrainConfig = {
     rows,
     cols,
-    wallProbability: 0,
     contentProbabilities: {
       Vide: 1,
       Monstre: 0,
       Tresor: 0,
+      Mur: 0,
     },
   };
   return new Terrain(config);
@@ -56,7 +56,7 @@ function acceptanceTest1(): void {
  */
 function acceptanceTest2(): void {
   const terrain = createEmptyTerrain(2, 2); // Grille 2x2
-  // On force la case (1,1) à contenir un monstre
+  // Forcer la case (1,1) à contenir un monstre
   terrain.getGrid()[1][1].content = CellContent.Monstre;
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 1);
   const message = joueur.processCommand("E");
@@ -126,7 +126,7 @@ function acceptanceTest4(): void {
  */
 function acceptanceTest5(): void {
   const terrain = createEmptyTerrain(4, 2); // Grille 4x2
-  // Forcer la case (1,3) à contenir un trésor
+  // Forcer la case (1,3) (colonne 1, ligne 3) à contenir un trésor
   terrain.getGrid()[3][1].content = CellContent.Tresor;
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 1, 2);
   const message = joueur.processCommand("N"); // (1,2) -> (1,3)
@@ -141,14 +141,14 @@ function acceptanceTest5(): void {
 /* ---------------- Acceptance Test 6 ---------------- */
 /**
  * Scénario : Déplacement bloqué par un obstacle.
- * Préconditions : Le personnage est à (1,3) et la case (2,3) est bloquée par un obstacle (mur).
+ * Préconditions : Le personnage est à (1,3) et la case de destination vers l'Est (2,3) contient un mur.
  * Action : Commande "E".
  * Résultat attendu : Le déplacement est refusé et le message "Un obstacle vous bloque le passage. Vous ne pouvez pas aller par là." est affiché.
  */
 function acceptanceTest6(): void {
   const terrain = createEmptyTerrain(4, 3); // Grille 4x3
-  // Pour bloquer le déplacement de (1,3) vers l'Est, on simule un mur dans la case (1,3) à droite.
-  terrain.getGrid()[3][1].blockedRight = true;
+  // Pour bloquer le déplacement de (1,3) vers l'Est, on force la case destination (2,3) à contenir un mur.
+  terrain.getGrid()[3][2].content = CellContent.Mur;
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 1, 3);
   const message = joueur.processCommand("E");
   assert.ok(
@@ -216,7 +216,7 @@ function acceptanceTest8(): void {
 function acceptanceTest9(): void {
   const terrain = createEmptyTerrain(5, 5);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 2, 2);
-  joueur.processCommand("D");
+  joueur.processCommand("D"); // Tourner à droite → Orientation E
   const message = joueur.processCommand("A"); // Avancer vers l'Est → (3,2)
   assert.ok(
     message.includes("(3, 2)"),
@@ -234,10 +234,10 @@ function acceptanceTest9(): void {
  * Actions : Séquence "A", "D", "A", "G", "A", "A".
  *   - Étape 1 : Avancer → (0,1)
  *   - Étape 2 : Tourner à droite → Orientation E
- *   - Étape 3 : Avancer → (1,1)
+ *   - Étape 3 : Avancer → (0,1) -> (1,1)
  *   - Étape 4 : Tourner à gauche → Orientation N
- *   - Étape 5 : Avancer → (1,2)
- *   - Étape 6 : Avancer → (1,3)
+ *   - Étape 5 : Avancer → (1,1) -> (1,2)
+ *   - Étape 6 : Avancer → (1,2) -> (1,3)
  * Résultat attendu : Les déplacements et orientations sont corrects à chaque étape.
  */
 function acceptanceTest10(): void {
