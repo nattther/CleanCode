@@ -43,20 +43,35 @@ export class Terrain {
       const rowArray: Case[] = [];
       for (let col = 0; col < this.cols; col++) {
         const cellContent = this.getRandomContent();
-        const walls = this.getRandomWalls();
-        rowArray.push(
-          new Case(
-            cellContent,
-            walls.blockedUp,
-            walls.blockedDown,
-            walls.blockedLeft,
-            walls.blockedRight
-          )
-        );
+        
+        // Pour les murs, on tient compte des cases déjà créées.
+        let blockedUp: boolean;
+        let blockedLeft: boolean;
+        
+        // Si ce n'est pas la première ligne, on hérite du mur bas de la case au-dessus.
+        if (row > 0) {
+          blockedUp = this.grid[row - 1][col].blockedDown;
+        } else {
+          blockedUp = Math.random() < this.wallProbability;
+        }
+        
+        // Si ce n'est pas la première colonne, on hérite du mur droit de la case à gauche.
+        if (col > 0) {
+          blockedLeft = rowArray[col - 1].blockedRight;
+        } else {
+          blockedLeft = Math.random() < this.wallProbability;
+        }
+        
+        // Pour les murs droit et bas, on génère aléatoirement.
+        const blockedRight = Math.random() < this.wallProbability;
+        const blockedDown = Math.random() < this.wallProbability;
+        
+        rowArray.push(new Case(cellContent, blockedUp, blockedDown, blockedLeft, blockedRight));
       }
       this.grid.push(rowArray);
     }
   }
+  
 
   /**
    * Retourne aléatoirement un contenu parmi les valeurs de l'énumération CellContent,
