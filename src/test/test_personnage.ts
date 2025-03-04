@@ -10,20 +10,19 @@ function testComparaisonGuerrier(): void {
     const guerrierReel = new Guerrier(nomValide);
     const guerrierFake = new FakeGuerrier(nomValide);
     
+    // Comparaison en utilisant toString() sur les deux côtés pour être sûrs de comparer des chaînes.
     assert.strictEqual(
         guerrierReel.nom.toString(),
-        guerrierFake.nom,
+        guerrierFake.nom.toString(),
         "Les noms doivent être identiques."
     );
     
-
     assert.deepStrictEqual(
         guerrierReel.stats,
         guerrierFake.stats,
         "Les statistiques doivent correspondre."
     );
     
-
     assert.deepStrictEqual(
         guerrierReel.inventaire,
         guerrierFake.inventaire,
@@ -32,6 +31,5 @@ function testComparaisonGuerrier(): void {
     
     console.log("Test de comparaison Guerrier réussi.");
 }
-
 
 testComparaisonGuerrier();
