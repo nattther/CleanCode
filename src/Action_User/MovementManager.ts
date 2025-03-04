@@ -1,4 +1,3 @@
-// src/Joueur/MovementManager.ts
 import { Terrain } from "../Terrain/terrain";
 import { CellContent } from "../Terrain/case";
 

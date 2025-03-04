@@ -1,4 +1,3 @@
-// src/Joueur/Joueur.ts
 import { Personnage } from "../Personnage/personnage";
 import { Terrain } from "../Terrain/terrain";
 import { Direction, MovementManager } from "./MovementManager";
@@ -75,36 +74,30 @@ private updatePosition(newX: number, newY: number): void {
    * @return {string} Message décrivant le résultat du déplacement.
    */
   private move(direction: Direction): string {
-    // Calcul de la nouvelle position.
-    const { newX, newY } = this.movementManager.calculateNewPosition(this.x, this.y, direction);
-  
-    // Vérification des limites de la grille.
+    const { newX, newY } = this.movementManager.calculateNewPosition(this.x, this.y, direction); 
+
     if (!this.movementManager.isWithinGrid(newX, newY)) {
       return this.movementManager.edgeMessage(direction);
     }
   
-    // Récupération de la grille pour vérifier la case actuelle.
     const grid = this.movementManager['terrain'].getGrid();
     const currentCase = grid[this.y][this.x];
   
-    // Vérification si un mur bloque le déplacement.
     if (this.movementManager.isBlocked(currentCase, direction)) {
       return "Un obstacle vous bloque le passage. Vous ne pouvez pas aller par là.";
     }
   
-    // Vérification du contenu de la case destination.
+
     const destinationMessage = this.movementManager.checkDestination(newX, newY);
     if (destinationMessage !== "") {
-      // Si c'est un monstre, ne pas mettre à jour la position.
       if (destinationMessage.includes("monstre")) {
         return destinationMessage;
       }
-      // Si un trésor est trouvé, mettre à jour la position et retourner le message.
       this.updatePosition(newX, newY);
       return `${destinationMessage} Vous êtes maintenant en position (${this.x}, ${this.y}).`;
     }
   
-    // Déplacement normal, mise à jour de la position.
+
     this.updatePosition(newX, newY);
     return `Vous êtes maintenant en position (${this.x}, ${this.y}).`;
   }
@@ -115,7 +108,7 @@ private updatePosition(newX: number, newY: number): void {
  * Change l'orientation du joueur vers la gauche.
  */
 private turnLeft(): void {
-    // Ordre des directions pour tourner à gauche.
+
     const leftOrder: Direction[] = [Direction.Nord, Direction.Ouest, Direction.Sud, Direction.Est];
     const currentIndex = leftOrder.indexOf(this.orientation);
     this.orientation = leftOrder[(currentIndex + 1) % leftOrder.length];
@@ -125,7 +118,7 @@ private turnLeft(): void {
    * Change l'orientation du joueur vers la droite.
    */
   private turnRight(): void {
-    // Ordre des directions pour tourner à droite.
+
     const rightOrder: Direction[] = [Direction.Nord, Direction.Est, Direction.Sud, Direction.Ouest];
     const currentIndex = rightOrder.indexOf(this.orientation);
     this.orientation = rightOrder[(currentIndex + 1) % rightOrder.length];
