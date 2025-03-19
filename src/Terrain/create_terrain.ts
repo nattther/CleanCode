@@ -1,4 +1,5 @@
 import { Terrain, TerrainConfig } from './terrain';
+import { CellContent } from './case';
 
 /**
  * Crée et retourne une instance de Terrain selon une configuration prédéfinie.
@@ -8,13 +9,13 @@ import { Terrain, TerrainConfig } from './terrain';
  */
 export function createTerrain(): Terrain {
     const config: TerrainConfig = {
-        rows: 6, // Nombre de lignes du terrain.
-        cols: 6, // Nombre de colonnes du terrain.
+        rows: 6, 
+        cols: 6, 
         contentProbabilities: {
-            Vide: 0.5,    // Probabilité qu'une case soit vide.
-            Monstre: 0.1, // Probabilité qu'une case contienne un monstre.
-            Tresor: 0.2,  // Probabilité qu'une case contienne un trésor.
-            Mur: 0.2      // Probabilité qu'une case soit un mur (inaccessible).
+            [CellContent.Vide]: 0.5,   
+            [CellContent.Monstre]: 0.1, 
+            [CellContent.Tresor]: 0.2,  
+            [CellContent.Mur]: 0.2      
         }
     };
 
