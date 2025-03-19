@@ -1,20 +1,19 @@
-
 import readline from "readline";
 import { createTerrain } from "./Terrain/create_terrain";
-import { Joueur } from "./Action_User/Joueur";
+import { Joueur } from "./Joueur/Joueur";
 import { lancerCreationPersonnage } from "./Personnage/menu_creation_personnage";
 
 async function main(): Promise<void> {
-  // Génération du terrain
+  // Génération du terrain.
   const terrain = createTerrain();
 
-  // Création du personnage
+  // Création du personnage.
   const personnage = await lancerCreationPersonnage();
 
-  // Création du joueur avec le personnage et le terrain
+  // Création du joueur avec le personnage et le terrain.
   const joueur = new Joueur(personnage, terrain);
 
-  // Interface readline pour gérer les commandes de mouvement
+  // Interface readline pour gérer les commandes de déplacement.
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

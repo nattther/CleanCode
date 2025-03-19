@@ -1,53 +1,20 @@
 import { Terrain } from "../Terrain/terrain";
+import { Direction } from "./Direction";
 import { CellContent } from "../Terrain/case";
 
 /**
- * Enumération des directions pour l'orientation du joueur.
+ * Classe responsable de la validation du terrain et de la gestion des messages liés aux cases.
  */
-export enum Direction {
-  Nord = "N",  // Représente le Nord.
-  Est = "E",   // Représente l'Est.
-  Sud = "S",   // Représente le Sud.
-  Ouest = "O", // Représente l'Ouest.
-}
-
-/**
- * Classe qui gère la logique de déplacement sur le terrain.
- */
-export class MovementManager {
+export class GridValidator {
   private terrain: Terrain;
 
   /**
-   * Initialise le gestionnaire avec le terrain de jeu.
+   * Initialise le validateur avec le terrain.
    *
-   * @param terrain Le terrain sur lequel le déplacement se fait.
+   * @param terrain Le terrain sur lequel la validation est effectuée.
    */
   constructor(terrain: Terrain) {
     this.terrain = terrain;
-  }
-
-  /**
-   * Calcule la nouvelle position en fonction de la position actuelle et de la direction.
-   *
-   * @param x Position actuelle en X.
-   * @param y Position actuelle en Y.
-   * @param direction La direction du déplacement.
-   * @returns Un objet contenant les nouvelles coordonnées { newX, newY }.
-   */
-  public calculateNewPosition(
-    x: number,
-    y: number,
-    direction: Direction
-  ): { newX: number; newY: number } {
-    const offsets: Record<Direction, { dx: number; dy: number }> = {
-      [Direction.Nord]: { dx: 0, dy: 1 },
-      [Direction.Sud]: { dx: 0, dy: -1 },
-      [Direction.Est]: { dx: 1, dy: 0 },
-      [Direction.Ouest]: { dx: -1, dy: 0 },
-    };
-
-    const offset = offsets[direction];
-    return { newX: x + offset.dx, newY: y + offset.dy };
   }
 
   /**

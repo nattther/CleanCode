@@ -14,17 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline_1 = __importDefault(require("readline"));
 const create_terrain_1 = require("./Terrain/create_terrain");
-const Joueur_1 = require("./Action_User/Joueur");
+const Joueur_1 = require("./Joueur/Joueur");
 const menu_creation_personnage_1 = require("./Personnage/menu_creation_personnage");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Génération du terrain
+        // Génération du terrain.
         const terrain = (0, create_terrain_1.createTerrain)();
-        // Création du personnage
+        // Création du personnage.
         const personnage = yield (0, menu_creation_personnage_1.lancerCreationPersonnage)();
-        // Création du joueur avec le personnage et le terrain
+        // Création du joueur avec le personnage et le terrain.
         const joueur = new Joueur_1.Joueur(personnage, terrain);
-        // Interface readline pour gérer les commandes de mouvement
+        // Interface readline pour gérer les commandes de déplacement.
         const rl = readline_1.default.createInterface({
             input: process.stdin,
             output: process.stdout,

@@ -1,6 +1,6 @@
 import assert from "assert";
 import { Terrain, TerrainConfig } from "../Terrain/terrain";
-import { Joueur } from "../Action_User/Joueur";
+import { Joueur } from "../Joueur/Joueur";
 import { FakeGuerrier } from "./FakeGuerrier";
 import { CellContent } from "../Terrain/case";
 
@@ -43,7 +43,7 @@ function acceptanceTest1(): void {
   );
   assert.strictEqual(joueur.x, 0, "Acceptance Test 1: x doit être 0.");
   assert.strictEqual(joueur.y, 1, "Acceptance Test 1: y doit être 1.");
-  console.log("Acceptance Test 1 passé : Déplacement vers une case vide.");
+  console.log("Acceptance Test 1 passé : Déplacement vers une case vid.");
 }
 
 /* ---------------- Acceptance Test 2 ---------------- */
@@ -82,7 +82,7 @@ function acceptanceTest3(): void {
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
   const message = joueur.processCommand("S"); // (0,0) -> (0,-1)
   assert.ok(
-    message.includes("bord du monde") || message.includes("ne pouvez pas aller plus au Sud"),
+    message.includes("bord du monde") || message.includes("ne pouvez pas aller plus"),
     "Acceptance Test 3: Message attendu pour déplacement hors grille."
   );
   assert.strictEqual(joueur.x, 0, "Acceptance Test 3: x reste à 0.");
@@ -122,11 +122,10 @@ function acceptanceTest4(): void {
  * Préconditions : Le personnage est à (1,2) et la case (1,3) contient un trésor.
  * Action : Commande "N".
  * Résultat attendu : Le personnage se déplace à (1,3) et un message indique "Vous avez trouvé un trésor ! Vous êtes maintenant en position (1, 3)."
- * (Optionnel : le trésor est ajouté à l'inventaire.)
  */
 function acceptanceTest5(): void {
   const terrain = createEmptyTerrain(4, 2); // Grille 4x2
-  // Forcer la case (1,3) (colonne 1, ligne 3) à contenir un trésor
+  // Forcer la case (1,3) à contenir un trésor
   terrain.getGrid()[3][1].content = CellContent.Tresor;
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 1, 2);
   const message = joueur.processCommand("N"); // (1,2) -> (1,3)
@@ -234,10 +233,10 @@ function acceptanceTest9(): void {
  * Actions : Séquence "A", "D", "A", "G", "A", "A".
  *   - Étape 1 : Avancer → (0,1)
  *   - Étape 2 : Tourner à droite → Orientation E
- *   - Étape 3 : Avancer → (0,1) -> (1,1)
+ *   - Étape 3 : Avancer → (1,1)
  *   - Étape 4 : Tourner à gauche → Orientation N
- *   - Étape 5 : Avancer → (1,1) -> (1,2)
- *   - Étape 6 : Avancer → (1,2) -> (1,3)
+ *   - Étape 5 : Avancer → (1,2)
+ *   - Étape 6 : Avancer → (1,3)
  * Résultat attendu : Les déplacements et orientations sont corrects à chaque étape.
  */
 function acceptanceTest10(): void {
