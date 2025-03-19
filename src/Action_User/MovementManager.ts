@@ -5,9 +5,9 @@ import { CellContent } from "../Terrain/case";
  * Enumération des directions pour l'orientation du joueur.
  */
 export enum Direction {
-  Nord = "N", // Représente le Nord.
-  Est = "E", // Représente l'Est.
-  Sud = "S", // Représente le Sud.
+  Nord = "N",  // Représente le Nord.
+  Est = "E",   // Représente l'Est.
+  Sud = "S",   // Représente le Sud.
   Ouest = "O", // Représente l'Ouest.
 }
 
@@ -59,26 +59,7 @@ export class MovementManager {
    */
   public isWithinGrid(newX: number, newY: number): boolean {
     const grid = this.terrain.getGrid();
-    return (
-      newX >= 0 && newX < grid[0].length && newY >= 0 && newY < grid.length
-    );
-  }
-
-  /**
-   * Vérifie si le déplacement est bloqué par un mur dans la case actuelle.
-   *
-   * @param currentCase La case actuelle.
-   * @param direction La direction du déplacement.
-   * @returns True si le mur bloque le déplacement, sinon false.
-   */
-  public isBlocked(currentCase: any, direction: Direction): boolean {
-    const blockMapping: Record<Direction, keyof typeof currentCase> = {
-      [Direction.Nord]: "blockedUp",
-      [Direction.Sud]: "blockedDown",
-      [Direction.Est]: "blockedRight",
-      [Direction.Ouest]: "blockedLeft",
-    };
-    return currentCase[blockMapping[direction]];
+    return newX >= 0 && newX < grid[0].length && newY >= 0 && newY < grid.length;
   }
 
   /**
@@ -97,7 +78,6 @@ export class MovementManager {
     return `Vous avez atteint le bord du monde. Vous ne pouvez pas aller plus au ${dirTextMapping[direction]}.`;
   }
 
-
   /**
    * Vérifie le contenu de la case destination et retourne un message adapté.
    *
@@ -111,9 +91,8 @@ export class MovementManager {
     const destinationMapping: Record<string, string> = {
       [CellContent.Monstre]: "Un monstre bloque votre chemin ! Vous devez le vaincre pour avancer.",
       [CellContent.Tresor]: "Vous avez trouvé un trésor !",
-      [CellContent.Mur]: "Un obstacle vous bloque le passage. Vous ne pouvez pas aller par là."
+      [CellContent.Mur]: "Un obstacle vous bloque le passage. Vous ne pouvez pas aller par là.",
     };
     return destinationMapping[destinationCase.content] || "";
   }
-  
 }
