@@ -1,12 +1,7 @@
 import { Case, CellContent } from "./case";
 import { ContentSelector } from "./contentSelector";
+import { TerrainConfig } from "./TerrainConfig";
 
-
-export interface TerrainConfig {
-    rows: number; 
-    cols: number; 
-    contentProbabilities?: { [key in CellContent]?: number }; 
-}
 
 export class Terrain {
     private grid: Case[][] = [];

@@ -1,5 +1,6 @@
 import assert from "assert";
-import { Terrain, TerrainConfig } from "../Terrain/terrain";
+import { Terrain } from "../Terrain/terrain";
+import { TerrainConfig } from "../Terrain/TerrainConfig";
 import { Joueur } from "../Joueur/Joueur";
 import { FakeGuerrier } from "./FakeGuerrier";
 import { CellContent } from "../Terrain/case";

@@ -1,4 +1,5 @@
-import { Terrain, TerrainConfig } from './terrain';
+import { Terrain } from './terrain';
+import { TerrainConfig } from "./TerrainConfig";
 import { CellContent } from './case';
 
 export function createTerrain(): Terrain {

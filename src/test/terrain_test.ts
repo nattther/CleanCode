@@ -1,5 +1,6 @@
 import assert from "assert";
-import { Terrain, TerrainConfig } from "../Terrain/terrain";
+import { Terrain } from "../Terrain/terrain";
+import { TerrainConfig } from "../Terrain/TerrainConfig";
 import { CellContent } from "../Terrain/case";
 
 function testTerrainDimensions(): void {
