@@ -1,9 +1,4 @@
 import { Personnage } from "./personnage";
-
-/**
- * Classe représentant un Guerrier avec ses statistiques initiales.
- */
-
 export class Guerrier extends Personnage {
     constructor(nom: string) {
         super(nom);

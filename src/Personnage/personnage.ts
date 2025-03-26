@@ -1,8 +1,5 @@
 import { Nom } from './Nom';
 
-/**
- * Interface définissant les statistiques globales d'un personnage.
- */
 export interface Stats {
     force: number;             // Dégâts des attaques physiques.
     intelligence: number;      // Efficacité des sorts magiques.
@@ -16,20 +13,12 @@ export interface Stats {
     mana: number;              // Points de Mana (PM) : Utilisés pour les sorts et compétences spéciales.
 }
 
-/**
- * Classe abstraite représentant un personnage.
- */
 export abstract class Personnage {
     public nom: Nom;
     public inventaire: string[];
     public stats: Stats;
 
-    /**
-     * Crée une instance de Personnage.
-     * @param nom Le nom du personnage.
-     */
     constructor(nom: string) {
-        // Utilisation du Value Object Nom pour la validation
         this.nom = new Nom(nom);
         this.inventaire = [];
         this.stats = {
@@ -46,18 +35,11 @@ export abstract class Personnage {
         };
     }
 
-    /**
-     * Affiche les informations du personnage.
-     * @returns Une chaîne contenant le nom, les statistiques et l'inventaire du personnage.
-     */
     public afficherInfos(): string {
         return `Nom: ${this.nom.toString()}\nStats: Force=${this.stats.force}, Intelligence=${this.stats.intelligence}, Défense=${this.stats.defense}, Résistance Magique=${this.stats.resistanceMagique}, Agilité=${this.stats.vitesse}, Chance=${this.stats.chance}, Endurance=${this.stats.endurance}, Esprit=${this.stats.esprit}, Santé=${this.stats.sante}, Mana=${this.stats.mana}\nInventaire: ${this.inventaire.join(", ") || "Vide"}`;
     }
 }
 
-/**
- * Interface pour le constructeur de Personnage.
- */
 export interface PersonnageConstructor {
     new (nom: string): Personnage;
 }

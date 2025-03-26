@@ -1,9 +1,5 @@
 import { Personnage } from "./personnage";
 
-/**
- * Classe représentant un Mage avec ses statistiques initiales.
- */
-
 export class Mage extends Personnage {
     constructor(nom: string) {
         super(nom);

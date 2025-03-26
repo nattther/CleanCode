@@ -1,9 +1,5 @@
 import { Personnage } from "./personnage";
 
-/**
- * Classe représentant un Voleur avec ses statistiques initiales.
- */
-
 export class Voleur extends Personnage {
     constructor(nom: string) {
         super(nom);

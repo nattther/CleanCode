@@ -13,6 +13,3 @@ export interface IPlayerAction {
     execute(combatManager: CombatManager): string;
   }
   
-  // Pour éviter une référence circulaire, vous pouvez définir CombatManager dans un type
-  // ou utiliser une importation différée dans un projet réel.
-  

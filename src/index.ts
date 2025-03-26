@@ -4,16 +4,15 @@ import { Joueur } from "./Joueur/Joueur";
 import { lancerCreationPersonnage } from "./Personnage/menu_creation_personnage";
 
 async function main(): Promise<void> {
-  // Génération du terrain.
+
   const terrain = createTerrain();
 
-  // Création du personnage.
+
   const personnage = await lancerCreationPersonnage();
 
-  // Création du joueur avec le personnage et le terrain.
+
   const joueur = new Joueur(personnage, terrain);
 
-  // Interface readline pour gérer les commandes de déplacement.
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

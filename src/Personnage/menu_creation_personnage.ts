@@ -4,11 +4,6 @@ import { Voleur } from "./Voleur";
 import { Mage } from "./Mage";
 import { Guerrier } from "./Guerrier";
 
-/**
- * Crée et renvoie une instance de Personnage via une Promise.
- *
- * @returns {Promise<Personnage>} Une promesse résolue avec l'instance du personnage créé.
- */
 export function lancerCreationPersonnage(): Promise<any> {
   return new Promise((resolve) => {
     const classOptions: { [key: string]: { name: string; constructeur: PersonnageConstructor } } = {

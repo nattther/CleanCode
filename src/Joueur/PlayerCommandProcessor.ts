@@ -8,9 +8,7 @@ import { AdvanceAction } from "../Movement/AdvanceAction";
 import { TurnLeftAction } from "../Movement/TurnLeftAction";
 import { TurnRightAction } from "../Movement/TurnRightAction";
 
-/**
- * Classe qui traite les commandes de mouvement du joueur.
- */
+
 export class PlayerCommandProcessor {
   private player: Joueur;
 
@@ -18,12 +16,6 @@ export class PlayerCommandProcessor {
     this.player = player;
   }
 
-  /**
-   * Traite une commande de mouvement et exécute l'action correspondante.
-   *
-   * @param command Commande saisie par l'utilisateur.
-   * @returns Message résultant de l'exécution de la commande.
-   */
   public processCommand(command: string): string {
     command = command.toUpperCase();
     const commandActions: { [key: string]: IMovementAction } = {

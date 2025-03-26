@@ -2,14 +2,11 @@ import assert from "assert";
 import { Terrain, TerrainConfig } from "../Terrain/terrain";
 import { CellContent } from "../Terrain/case";
 
-/**
- * Teste que la grille créée a bien le nombre de lignes et de colonnes spécifié.
- */
 function testTerrainDimensions(): void {
     const config: TerrainConfig = { 
         rows: 6, 
         cols: 6,
-        contentProbabilities: { // Distribution quelconque valide
+        contentProbabilities: { 
             Vide: 0.5,
             Monstre: 0.1,
             Tresor: 0.2,
@@ -25,10 +22,7 @@ function testTerrainDimensions(): void {
     console.log("Test des dimensions du terrain réussi.");
 }
 
-/**
- * Teste qu'un terrain configuré sans mur (Mur à 0) produit uniquement des cases non mur.
- * Ici, on force toutes les cases à être 'Vide'.
- */
+
 function testEmptyTerrain(): void {
     const config: TerrainConfig = { 
         rows: 3, 
@@ -50,9 +44,6 @@ function testEmptyTerrain(): void {
     console.log("Test du terrain vide (sans murs) réussi.");
 }
 
-/**
- * Teste qu'un terrain configuré avec une probabilité maximale pour les murs produit uniquement des cases mur.
- */
 function testFullyBlockedTerrain(): void {
     const config: TerrainConfig = { 
         rows: 3, 
@@ -74,9 +65,7 @@ function testFullyBlockedTerrain(): void {
     console.log("Test du terrain avec murs partout réussi.");
 }
 
-/**
- * Vérifie que le contenu de chaque case appartient bien à l'énumération CellContent.
- */
+
 function testValidCellContent(): void {
     const config: TerrainConfig = { 
         rows: 3, 
@@ -99,9 +88,7 @@ function testValidCellContent(): void {
     console.log("Test du contenu des cases réussi.");
 }
 
-/**
- * Exécute tous les tests du terrain.
- */
+
 function runTerrainTests(): void {
     testTerrainDimensions();
     testEmptyTerrain();
