@@ -21,7 +21,7 @@ function createEmptyTerrain(rows: number, cols: number): Terrain {
 
 
 function acceptanceTest1(): void {
-  const terrain = createEmptyTerrain(2, 1); // Grille 2x1
+  const terrain = createEmptyTerrain(2, 1); 
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
   const message = joueur.processCommand("N");
   assert.ok(
