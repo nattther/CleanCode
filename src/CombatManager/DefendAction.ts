@@ -1,12 +1,18 @@
-import { IPlayerAction } from "./IPlayerAction";
+// DefendAction.ts
 import { CombatManager } from "./CombatManager";
+import { ICombatAction } from "./ICombatAction";
 
-export class DefendAction implements IPlayerAction {
-
-  execute(combatManager: CombatManager): string {
-    const player = combatManager.getPlayer();
-    const monster = combatManager.getMonster();
-    const damage = combatManager.applyDamage(monster.stats.force, player.stats.defense, player, 0.5);
-    return `Le joueur se défend. Le monstre attaque et inflige ${damage} points de dégâts réduits. Le joueur a ${player.stats.sante} PV restants.`;
+/**
+ * Action de défense lors du combat.
+ */
+export class DefendAction implements ICombatAction {
+  /**
+   * Exécute l'action de défense.
+   * @param combatManager L'instance de CombatManager.
+   * @return string Résultat de la défense.
+   */
+  public execute(combatManager: CombatManager): string {
+    // Implémentez ici votre logique de défense (ex. réduction des dégâts pour le prochain tour)
+    return "Vous vous défendez contre l'attaque du monstre.";
   }
 }

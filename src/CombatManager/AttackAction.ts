@@ -1,23 +1,20 @@
-import { IPlayerAction } from "./IPlayerAction";
+// AttackAction.ts
 import { CombatManager } from "./CombatManager";
-import { MonsterAttackAction } from "./MonsterAttackAction";
+import { ICombatAction } from "./ICombatAction";
 
-export class AttackAction implements IPlayerAction {
-  execute(combatManager: CombatManager): string {
-    const player = combatManager.getPlayer();
-    const monster = combatManager.getMonster();
-    const damage = combatManager.applyDamage(player.stats.force, monster.stats.defense, monster);
-    let message = `Le joueur attaque et inflige ${damage} points de dégâts. Le monstre a ${monster.stats.sante} PV restants.`;
-    if (!combatManager.isCombatOver()) {
-      message += "\n" + new MonsterAttackAction().execute(combatManager);
-    } else {
-      message += "\nLe monstre est vaincu !";
-    }
-    return message;
+/**
+ * Action d'attaque lors du combat.
+ */
+export class AttackAction implements ICombatAction {
+  /**
+   * Exécute l'action d'attaque.
+   * @param combatManager L'instance de CombatManager.
+   * @return string Résultat de l'attaque.
+   */
+  public execute(combatManager: CombatManager): string {
+    const playerForce = combatManager.getPlayer().stats.force;
+    const monsterDefense = combatManager.getMonster().stats.defense;
+    const damage = combatManager.applyDamage(playerForce, monsterDefense, combatManager.getMonster());
+    return `Vous attaquez le monstre et lui infligez ${damage} points de dégâts.`;
   }
 }
-
-
-
-
-

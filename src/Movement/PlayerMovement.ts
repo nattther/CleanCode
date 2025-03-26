@@ -2,8 +2,9 @@ import { Joueur } from "../Joueur/Joueur";
 import { Terrain } from "../Terrain/terrain";
 import { MovementManager } from "./MovementManager";
 import { Direction } from "./Direction";
-import { CombatAction } from "../CombatManager/CombatAction";
 import { Personnage } from "../Personnage/personnage";
+import { createMonster } from "../Monstre/monsterFactory";
+
 
 export class PlayerMovement {
   private player: Joueur;
@@ -15,6 +16,7 @@ export class PlayerMovement {
     this.personnage = personnage
     this.movementManager = new MovementManager(terrain);
   }
+
 
   public moveForward(): string {
     const { newX, newY } = this.movementManager.calculateNewPosition(
@@ -29,15 +31,8 @@ export class PlayerMovement {
     if (destinationMessage) {
       if (destinationMessage.includes("monstre")) {
 
-        const combatMessage = new CombatAction().execute(this.personnage);
-        if (combatMessage.includes("Vous avez vaincu le monstre")) {
-
-          this.movementManager.clearCell(newX, newY);
-          this.player.updatePosition(newX, newY);
-          return combatMessage + "\nLe monstre est vaincu, vous avancez sur la case désormais libre.";
-        } else {
-          return combatMessage + "\nVous ne pouvez pas avancer tant que le monstre vous bat.";
-        }
+        const monster = createMonster(); // Fonction retournant un Personnage représentant le monstre
+        return this.player.startCombat(monster);
       } else if (destinationMessage.includes("obstacle")) {
         return destinationMessage;
       }
@@ -47,6 +42,7 @@ export class PlayerMovement {
     this.player.updatePosition(newX, newY);
     return `Vous êtes maintenant en position (${newX}, ${newY}).`;
   }
+  
 
   public turnLeft(): string {
     const leftOrder: Direction[] = [Direction.Nord, Direction.Ouest, Direction.Sud, Direction.Est];
