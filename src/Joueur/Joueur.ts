@@ -1,7 +1,7 @@
 import { Personnage } from "../Personnage/personnage";
 import { Terrain } from "../Terrain/terrain";
 import { Direction } from "../Movement/Direction";
-import { PlayerMovement } from "./PlayerMovement";
+import { PlayerMovement } from "../Movement/PlayerMovement";
 import { PlayerCommandProcessor } from "./PlayerCommandProcessor";
 
 
@@ -19,7 +19,7 @@ export class Joueur {
     this._x = startX;
     this._y = startY;
     this._orientation = Direction.Nord;
-    this.movement = new PlayerMovement(this, terrain);
+    this.movement = new PlayerMovement(this,personnage, terrain);
     this.commandProcessor = new PlayerCommandProcessor(this);
   }
 

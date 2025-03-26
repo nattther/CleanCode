@@ -1,7 +1,7 @@
+// Terrain.ts
 import { Case, CellContent } from "./case";
 import { ContentSelector } from "./contentSelector";
 import { TerrainConfig } from "./TerrainConfig";
-
 
 export class Terrain {
     private grid: Case[][] = [];
@@ -50,5 +50,12 @@ export class Terrain {
 
     public getGrid(): Case[][] {
         return this.grid;
+    }
+
+    public clearCell(x: number, y: number): void {
+        if (x < 0 || x >= this.cols || y < 0 || y >= this.rows) {
+            throw new Error("Les coordonnées sont hors des limites de la grille.");
+        }
+        this.grid[y][x].content = CellContent.Vide;
     }
 }

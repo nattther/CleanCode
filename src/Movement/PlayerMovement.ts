@@ -1,17 +1,20 @@
-import { Joueur } from "./Joueur";
+import { Joueur } from "../Joueur/Joueur";
 import { Terrain } from "../Terrain/terrain";
-import { MovementManager } from "../Movement/MovementManager";
-import { Direction } from "../Movement/Direction";
+import { MovementManager } from "./MovementManager";
+import { Direction } from "./Direction";
+import { CombatAction } from "../CombatManager/CombatAction";
+import { Personnage } from "../Personnage/personnage";
 
 export class PlayerMovement {
   private player: Joueur;
+  private personnage: Personnage;
   private movementManager: MovementManager;
 
-  constructor(player: Joueur, terrain: Terrain) {
+  constructor(player: Joueur,personnage: Personnage, terrain: Terrain) {
     this.player = player;
+    this.personnage = personnage
     this.movementManager = new MovementManager(terrain);
   }
-
 
   public moveForward(): string {
     const { newX, newY } = this.movementManager.calculateNewPosition(
@@ -24,8 +27,18 @@ export class PlayerMovement {
     }
     const destinationMessage = this.movementManager.checkDestination(newX, newY);
     if (destinationMessage) {
+      if (destinationMessage.includes("monstre")) {
 
-      if (destinationMessage.includes("monstre") || destinationMessage.includes("obstacle")) {
+        const combatMessage = new CombatAction().execute(this.personnage);
+        if (combatMessage.includes("Vous avez vaincu le monstre")) {
+
+          this.movementManager.clearCell(newX, newY);
+          this.player.updatePosition(newX, newY);
+          return combatMessage + "\nLe monstre est vaincu, vous avancez sur la case désormais libre.";
+        } else {
+          return combatMessage + "\nVous ne pouvez pas avancer tant que le monstre vous bat.";
+        }
+      } else if (destinationMessage.includes("obstacle")) {
         return destinationMessage;
       }
       this.player.updatePosition(newX, newY);
@@ -35,7 +48,6 @@ export class PlayerMovement {
     return `Vous êtes maintenant en position (${newX}, ${newY}).`;
   }
 
-
   public turnLeft(): string {
     const leftOrder: Direction[] = [Direction.Nord, Direction.Ouest, Direction.Sud, Direction.Est];
     const currentIndex = leftOrder.indexOf(this.player.orientation);
@@ -43,7 +55,6 @@ export class PlayerMovement {
     this.player.setOrientation(newOrientation);
     return `Vous faites maintenant face à ${newOrientation}.`;
   }
-
 
   public turnRight(): string {
     const rightOrder: Direction[] = [Direction.Nord, Direction.Est, Direction.Sud, Direction.Ouest];

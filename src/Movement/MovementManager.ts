@@ -40,4 +40,8 @@ export class MovementManager {
   public checkDestination(newX: number, newY: number): string {
     return this.gridValidator.checkDestination(newX, newY);
   }
+
+   public clearCell(x: number, y: number): void {
+    this.terrain.clearCell(x, y);
+  }
 }
