@@ -1,9 +1,8 @@
 import { Personnage } from "./personnage";
-
+import { Stats } from "./Stats";
 export class Mage extends Personnage {
-    constructor(nom: string) {
-        super(nom);
-        this.stats = {
+  protected getDefaultStats(): Stats {
+    return {
             force: 4,
             intelligence: 15,
             defense: 5,

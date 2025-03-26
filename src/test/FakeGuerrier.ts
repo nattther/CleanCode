@@ -1,11 +1,9 @@
-import { Personnage, Stats } from "../Personnage/personnage";
-
+import { Personnage } from "../Personnage/personnage";
+import { Stats } from "../Personnage/Stats";
 
 export class FakeGuerrier extends Personnage {
-
-  constructor(nom: string) {
-    super(nom); 
-    this.stats = {
+  protected getDefaultStats(): Stats {
+    return {
       force: 15,
       intelligence: 5,
       defense: 12,

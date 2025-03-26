@@ -2,7 +2,7 @@
 
 ### Single Responsibility Principle (SRP)
 - La classe `Personnage` semble avoir trop de responsabilités (gestion des stats, des mouvements, des combats)
-- Le fichier `menu_creation_personnage.ts` mélange la logique d'interface utilisateur avec la logique métier
+- Le fichier `menu_creation_personnage.ts` mélange la logique d'interface utilisateur avec la logique métier (DONE)
 
 ### Open/Closed Principle (OCP)
 - Les classes de personnages (`Guerrier`, `Mage`, `Voleur`) semblent être des extensions directes sans abstraction commune

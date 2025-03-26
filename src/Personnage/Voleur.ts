@@ -1,9 +1,8 @@
 import { Personnage } from "./personnage";
-
+import { Stats } from "./Stats";
 export class Voleur extends Personnage {
-    constructor(nom: string) {
-        super(nom);
-        this.stats = {
+  protected getDefaultStats(): Stats {
+    return {
             force: 10,
             intelligence: 7,
             defense: 8,
