@@ -31,7 +31,7 @@ export class PlayerMovement {
     if (destinationMessage) {
       if (destinationMessage.includes("monstre")) {
 
-        const monster = createMonster(); // Fonction retournant un Personnage représentant le monstre
+        const monster = createMonster();
         return this.player.startCombat(monster);
       } else if (destinationMessage.includes("obstacle")) {
         return destinationMessage;

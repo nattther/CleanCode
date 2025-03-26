@@ -1,19 +1,16 @@
-// Joueur.ts
 import { Personnage } from "../Personnage/personnage";
 import { Terrain } from "../Terrain/terrain";
 import { Direction } from "../Movement/Direction";
 import { PlayerMovement } from "../Movement/PlayerMovement";
 import { PlayerCommandProcessor } from "./PlayerCommandProcessor";
-import { CombatCommandProcessor } from "../CombatManager/CombatCommandProcessor";
+
 import { CombatManager } from "../CombatManager/CombatManager";
 import { DefaultDamageCalculator } from "../CombatManager/DefaultDamageCalculator";
+import { CombatCommandProcessor } from "../CombatManager/CombatCommandProcessor";
 
-
-/**
- * Classe représentant le joueur.
- */
 export class Joueur {
   public personnage: Personnage;
+  private terrain: Terrain;
   private movement: PlayerMovement;
   private commandProcessor: PlayerCommandProcessor;
   private combatProcessor: CombatCommandProcessor;
@@ -25,6 +22,7 @@ export class Joueur {
 
   constructor(personnage: Personnage, terrain: Terrain, startX: number = 0, startY: number = 0) {
     this.personnage = personnage;
+    this.terrain = terrain;
     this._x = startX;
     this._y = startY;
     this._orientation = Direction.Nord;
@@ -46,11 +44,6 @@ export class Joueur {
     this._y = newY;
   }
 
-  /**
-   * Démarre le mode combat en instanciant un CombatManager.
-   * @param monster Le monstre rencontré.
-   * @return string Message invitant l'utilisateur à choisir une action de combat.
-   */
   public startCombat(monster: Personnage): string {
     const damageCalculator = new DefaultDamageCalculator();
     this.combatManager = new CombatManager(this.personnage, monster, damageCalculator);
@@ -58,28 +51,16 @@ export class Joueur {
     return "Un monstre se dresse devant vous ! Choisissez votre action de combat : [A]ttaquer, [D]éfendre, [F]uir.";
   }
 
-  /**
-   * Retourne l'instance actuelle du CombatManager.
-   * @return CombatManager | null
-   */
   public getCombatManager(): CombatManager | null {
     return this.combatManager;
   }
 
-  /**
-   * Termine le mode combat.
-   */
   public endCombat(): void {
+    this.terrain.clearCell(this._x, this._y);
     this.inCombat = false;
     this.combatManager = null;
   }
 
-  /**
-   * Traite la commande saisie par l'utilisateur.
-   * En mode combat, délègue au processeur de combat.
-   * @param command La commande saisie.
-   * @return string Résultat de l'action.
-   */
   public processCommand(command: string): string {
     if (this.inCombat) {
       return this.combatProcessor.processCommand(command);
