@@ -16,13 +16,13 @@ const readline_1 = __importDefault(require("readline"));
 const create_terrain_1 = require("./Terrain/create_terrain");
 const Joueur_1 = require("./Joueur/Joueur");
 const menu_creation_personnage_1 = require("./Personnage/menu_creation_personnage");
-const JoueurCommandHandler_1 = require("./Joueur/JoueurCommandHandler");
+const GameCommandHandler_1 = require("./Joueur/GameCommandHandler");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const terrain = (0, create_terrain_1.createTerrain)();
         const personnage = yield (0, menu_creation_personnage_1.lancerCreationPersonnage)();
         const joueur = new Joueur_1.Joueur(personnage, terrain);
-        const handler = new JoueurCommandHandler_1.JoueurCommandHandler(joueur, terrain);
+        const handler = new GameCommandHandler_1.GameCommandHandler(joueur, terrain);
         const rl = readline_1.default.createInterface({
             input: process.stdin,
             output: process.stdout,

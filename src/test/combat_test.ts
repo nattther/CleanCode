@@ -4,8 +4,7 @@ import { TerrainConfig } from "../Terrain/TerrainConfig";
 import { Joueur } from "../Joueur/Joueur";
 import { FakeGuerrier } from "./FakeGuerrier";
 import { Monstre } from "../Monstre/Monstre";
-import { DefaultDamageCalculator } from "../CombatManager/DefaultDamageCalculator";
-import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
+import { GameCommandHandler } from "../Joueur/GameCommandHandler";
 
 function createEmptyTerrain(rows: number, cols: number): Terrain {
   const config: TerrainConfig = {
@@ -24,7 +23,7 @@ function createEmptyTerrain(rows: number, cols: number): Terrain {
 function acceptanceTest1(): void {
   const terrain = createEmptyTerrain(2, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new ExplorationCommandHandler(joueur, terrain);
+  const handler = new GameCommandHandler(joueur, terrain);
   const message = handler.processCommand("N");
   assert.ok(message.includes("(0, 1)"), "Acceptance Test 1: Le joueur doit se déplacer vers (0, 1).");
   assert.strictEqual(joueur.x, 0, "Acceptance Test 1: x doit être 0.");
@@ -35,9 +34,9 @@ function acceptanceTest1(): void {
 function acceptanceCombatTestAttack(): void {
   const terrain = createEmptyTerrain(1, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new JoueurCommandHandler(joueur, terrain);
+  const handler = new GameCommandHandler(joueur, terrain);
   const monstre = new Monstre("Goblin");
-  handler.startCombat(monstre, new DefaultDamageCalculator());
+  handler.startCombat(monstre);
   const message = handler.processCommand("P");
   assert.strictEqual(monstre.stats.sante, 8, "Après l'attaque, le monstre doit avoir 8 PV.");
   assert.strictEqual(joueur.personnage.stats.sante, 147, "Après la riposte du monstre, le joueur doit avoir 147 PV.");
@@ -47,9 +46,9 @@ function acceptanceCombatTestAttack(): void {
 function acceptanceCombatTestDefense(): void {
   const terrain = createEmptyTerrain(1, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new JoueurCommandHandler(joueur, terrain);
+  const handler = new GameCommandHandler(joueur, terrain);
   const monstre = new Monstre("Goblin");
-  handler.startCombat(monstre, new DefaultDamageCalculator());
+  handler.startCombat(monstre);
   const message = handler.processCommand("M");
   assert.strictEqual(monstre.stats.sante, 20, "Après une défense, le monstre doit conserver 20 PV.");
   assert.strictEqual(joueur.personnage.stats.sante, 149, "Après une défense, le joueur doit avoir 149 PV.");
@@ -59,10 +58,10 @@ function acceptanceCombatTestDefense(): void {
 function acceptanceCombatTestVictory(): void {
   const terrain = createEmptyTerrain(1, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new JoueurCommandHandler(joueur, terrain);
+  const handler = new GameCommandHandler(joueur, terrain);
   const monstre = new Monstre("Goblin");
   monstre.stats.sante = 10;
-  handler.startCombat(monstre, new DefaultDamageCalculator());
+  handler.startCombat(monstre);
   const message = handler.processCommand("P");
   assert.strictEqual(monstre.stats.sante, 0, "Après l'attaque, le monstre doit avoir 0 PV.");
   assert.ok(message.includes("Combat terminé") && message.includes("joueur"), "Le combat doit se terminer avec la victoire du joueur.");
@@ -72,10 +71,10 @@ function acceptanceCombatTestVictory(): void {
 function acceptanceCombatTestDefeat(): void {
   const terrain = createEmptyTerrain(1, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new JoueurCommandHandler(joueur, terrain);
+  const handler = new GameCommandHandler(joueur, terrain);
   const monstre = new Monstre("Goblin");
   joueur.personnage.stats.sante = 2;
-  handler.startCombat(monstre, new DefaultDamageCalculator());
+  handler.startCombat(monstre);
   const message = handler.processCommand("P");
   assert.strictEqual(joueur.personnage.stats.sante, 0, "Après l'attaque du monstre, le joueur doit avoir 0 PV.");
   assert.ok(message.includes("Combat terminé") && message.includes("monstre"), "Le combat doit se terminer avec la victoire du monstre.");
@@ -83,6 +82,7 @@ function acceptanceCombatTestDefeat(): void {
 }
 
 export function runCombatAcceptanceTests(): void {
+  acceptanceTest1();
   acceptanceCombatTestAttack();
   acceptanceCombatTestDefense();
   acceptanceCombatTestVictory();

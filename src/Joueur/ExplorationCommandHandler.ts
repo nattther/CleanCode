@@ -1,19 +1,17 @@
 import { Joueur } from "./Joueur";
 import { Terrain } from "../Terrain/terrain";
 import { PlayerMovement } from "../Movement/PlayerMovement";
-import { PlayerCommandProcessor } from "../Joueur/PlayerCommandProcessor";
+import { PlayerCommandProcessor } from "./PlayerCommandProcessor";
 import { Personnage } from "../Personnage/personnage";
 
 export class ExplorationCommandHandler {
   private movement: PlayerMovement;
   private commandProcessor: PlayerCommandProcessor;
 
-  constructor(private joueur: Joueur, terrain: Terrain, onEncounter: (monster: Personnage, newX: number, newY: number) => void) {
+  constructor(private joueur: Joueur, terrain: Terrain, onEncounter: (monster: Personnage, newX: number, newY: number) => string) {
     this.movement = new PlayerMovement(joueur, joueur.personnage, terrain, (monster, newX, newY) => {
-        onEncounter(monster, newX, newY);
-        return "";
-      });
-      
+      return onEncounter(monster, newX, newY);
+    });
     this.commandProcessor = new PlayerCommandProcessor(this);
   }
 

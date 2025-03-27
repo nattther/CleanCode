@@ -11,7 +11,7 @@ export class GameCommandHandler {
 
   constructor(private joueur: Joueur, terrain: Terrain) {
     this.explorationHandler = new ExplorationCommandHandler(joueur, terrain, (monster, newX, newY) => {
-      this.startCombat(monster);
+      return this.startCombat(monster);
     });
   }
 
