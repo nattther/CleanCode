@@ -1,4 +1,4 @@
-import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
+import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
 import { IMovementAction } from "../Movement/IMovementAction";
 import { NorthAction } from "../Movement/NorthAction";
 import { SouthAction } from "../Movement/SouthAction";
@@ -9,9 +9,9 @@ import { TurnLeftAction } from "../Movement/TurnLeftAction";
 import { TurnRightAction } from "../Movement/TurnRightAction";
 
 export class PlayerCommandProcessor {
-  private handler: JoueurCommandHandler;
+  private handler: ExplorationCommandHandler;
 
-  constructor(handler: JoueurCommandHandler) {
+  constructor(handler: ExplorationCommandHandler) {
     this.handler = handler;
   }
 

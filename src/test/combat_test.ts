@@ -4,8 +4,8 @@ import { TerrainConfig } from "../Terrain/TerrainConfig";
 import { Joueur } from "../Joueur/Joueur";
 import { FakeGuerrier } from "./FakeGuerrier";
 import { Monstre } from "../Monstre/Monstre";
-import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
 import { DefaultDamageCalculator } from "../CombatManager/DefaultDamageCalculator";
+import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
 
 function createEmptyTerrain(rows: number, cols: number): Terrain {
   const config: TerrainConfig = {
@@ -24,7 +24,7 @@ function createEmptyTerrain(rows: number, cols: number): Terrain {
 function acceptanceTest1(): void {
   const terrain = createEmptyTerrain(2, 1);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
-  const handler = new JoueurCommandHandler(joueur, terrain);
+  const handler = new ExplorationCommandHandler(joueur, terrain);
   const message = handler.processCommand("N");
   assert.ok(message.includes("(0, 1)"), "Acceptance Test 1: Le joueur doit se déplacer vers (0, 1).");
   assert.strictEqual(joueur.x, 0, "Acceptance Test 1: x doit être 0.");

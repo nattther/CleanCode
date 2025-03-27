@@ -130,7 +130,7 @@ function acceptanceTest9(): void {
 
 function acceptanceTest10(): void {
   const terrain = createEmptyTerrain(5, 5);
-  const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 0);
+  const joueur = new Joueur(new FakeGuerrier("Arthur"), 0, 0);
   const handler = new JoueurCommandHandler(joueur, terrain);
   let message = handler.processCommand("A");
   assert.ok(message.includes("(0, 1)"), "Acceptance Test 10 - Étape 1: Déplacement vers (0,1) attendu.");

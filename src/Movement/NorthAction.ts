@@ -1,10 +1,10 @@
 import { IMovementAction } from "./IMovementAction";
 import { Direction } from "./Direction";
-import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
+import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
 
 
 export class NorthAction implements IMovementAction {
-  public execute(handler: JoueurCommandHandler): string {
+  public execute(handler: ExplorationCommandHandler): string {
     handler.getJoueur().setOrientation(Direction.Nord);
     return handler.moveForward();
   }

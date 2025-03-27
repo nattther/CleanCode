@@ -1,4 +1,4 @@
-import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
+import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
 export interface IMovementAction {
-  execute(handler: JoueurCommandHandler): string;
+  execute(handler: ExplorationCommandHandler): string;
 }

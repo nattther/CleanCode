@@ -1,10 +1,8 @@
 import { IMovementAction } from "./IMovementAction";
-
-import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
-
+import { ExplorationCommandHandler } from "../Joueur/ExplorationCommandHandler";
 
 export class AdvanceAction implements IMovementAction {
-  public execute(handler: JoueurCommandHandler): string {
+  public execute(handler: ExplorationCommandHandler): string {
     return handler.moveForward();
   }
 }
