@@ -76,7 +76,7 @@ function acceptanceTest5(): void {
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 1, 2);
   const handler = new GameCommandHandler(joueur, terrain);
   const message = handler.processCommand("N");
-  assert.ok(message.includes("Vous avez trouvé un trésor"), "Acceptance Test 5: Message attendu pour trésor.");
+  assert.ok(message.includes("Vous avez trouvé un trésor !"), "Acceptance Test 5: Message attendu pour trésor.");
   assert.ok(message.includes("(1, 3)"), "Acceptance Test 5: Déplacement vers (1,3) attendu.");
   console.log("Acceptance Test 5 passé : Rencontre d'un trésor lors du déplacement.");
 }

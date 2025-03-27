@@ -37,11 +37,12 @@ export class MovementManager {
     return this.gridValidator.edgeMessage(direction);
   }
 
-  public checkDestination(newX: number, newY: number): string {
-    return this.gridValidator.checkDestination(newX, newY);
-  }
 
    public clearCell(x: number, y: number): void {
     this.terrain.clearCell(x, y);
+  }
+
+  public getTerrain(): Terrain {
+    return this.terrain;
   }
 }
