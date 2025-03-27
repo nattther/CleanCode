@@ -4,7 +4,7 @@ import { Stats } from "../Personnage/Stats";
 export class Monstre extends Personnage {
   protected getDefaultStats(): Stats {
     return {
-      force: 8,
+      force: 15,
       intelligence: 5,
       defense: 3,
       resistanceMagique: 2,

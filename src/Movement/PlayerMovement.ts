@@ -30,7 +30,7 @@ export class PlayerMovement {
     const destinationMessage = this.movementManager.checkDestination(newX, newY);
     if (destinationMessage) {
       if (destinationMessage.includes("monstre")) {
-
+        this.player.updatePosition(newX, newY);
         const monster = createMonster();
         return this.player.startCombat(monster);
       } else if (destinationMessage.includes("obstacle")) {

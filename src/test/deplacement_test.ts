@@ -40,11 +40,11 @@ function acceptanceTest2(): void {
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 1);
   const message = joueur.processCommand("E");
   assert.ok(
-    message.includes("Un monstre bloque votre chemin"),
+    message.includes("Un monstre se dresse devant vous"),
     "Acceptance Test 2: Le message doit indiquer la présence d'un monstre."
   );
 
-  assert.strictEqual(joueur.x, 0, "Acceptance Test 2: x reste à 0.");
+  assert.strictEqual(joueur.x, 1, "Acceptance Test 2: x deviens 1.");
   assert.strictEqual(joueur.y, 1, "Acceptance Test 2: y reste à 1.");
   console.log("Acceptance Test 2 passé : Déplacement vers une case contenant un monstre.");
 }
@@ -114,7 +114,7 @@ function acceptanceTest6(): void {
 function acceptanceTest7(): void {
   const terrain = createEmptyTerrain(5, 5);
   const joueur = new Joueur(new FakeGuerrier("Arthur"), terrain, 0, 4);
-  const message = joueur.processCommand("N"); // (0,4) -> (0,5) invalide
+  const message = joueur.processCommand("N"); 
   assert.ok(
     message.includes("bord du monde"),
     "Acceptance Test 7: Le message doit indiquer que le bord est atteint."
@@ -185,7 +185,7 @@ function acceptanceTest10(): void {
   console.log("Acceptance Test 10 passé : Série de commandes complexes.");
 }
 
-function runAcceptanceTests(): void {
+export function runAcceptanceTests(): void {
   acceptanceTest1();
   acceptanceTest2();
   acceptanceTest3();

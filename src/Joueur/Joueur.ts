@@ -48,7 +48,7 @@ export class Joueur {
     const damageCalculator = new DefaultDamageCalculator();
     this.combatManager = new CombatManager(this.personnage, monster, damageCalculator);
     this.inCombat = true;
-    return "Un monstre se dresse devant vous ! Choisissez votre action de combat : [A]ttaquer, [D]éfendre, [F]uir.";
+    return "Un monstre se dresse devant vous ! Choisissez votre action de combat : [P] Attaquer, [M] Défendre";
   }
 
   public getCombatManager(): CombatManager | null {

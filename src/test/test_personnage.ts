@@ -2,7 +2,7 @@ import assert from "assert";
 import { Guerrier } from "../Personnage/Guerrier";
 import { FakeGuerrier } from "./FakeGuerrier";
 
-function testComparaisonGuerrier(): void {
+export function testComparaisonGuerrier(): void {
     const nomValide = "Arthur";
     const guerrierReel = new Guerrier(nomValide);
     const guerrierFake = new FakeGuerrier(nomValide);

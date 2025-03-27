@@ -90,7 +90,7 @@ function testValidCellContent(): void {
 }
 
 
-function runTerrainTests(): void {
+export function runTerrainTests(): void {
     testTerrainDimensions();
     testEmptyTerrain();
     testFullyBlockedTerrain();
