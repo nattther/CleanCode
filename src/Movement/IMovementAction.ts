@@ -1,4 +1,4 @@
-import { Joueur } from "../Joueur/Joueur";
+import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
 export interface IMovementAction {
-  execute(joueur: Joueur): string;
+  execute(handler: JoueurCommandHandler): string;
 }

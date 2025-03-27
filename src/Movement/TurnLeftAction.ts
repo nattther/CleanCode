@@ -1,8 +1,8 @@
 import { IMovementAction } from "./IMovementAction";
-import { Joueur } from "../Joueur/Joueur";
+import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
 
 export class TurnLeftAction implements IMovementAction {
-  public execute(joueur: Joueur): string {
-    return joueur.turnLeftAction();
+  public execute(handler: JoueurCommandHandler): string {
+    return handler.turnLeftAction();
   }
 }

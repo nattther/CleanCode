@@ -1,4 +1,4 @@
-import { Joueur } from "./Joueur";
+import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
 import { IMovementAction } from "../Movement/IMovementAction";
 import { NorthAction } from "../Movement/NorthAction";
 import { SouthAction } from "../Movement/SouthAction";
@@ -8,12 +8,11 @@ import { AdvanceAction } from "../Movement/AdvanceAction";
 import { TurnLeftAction } from "../Movement/TurnLeftAction";
 import { TurnRightAction } from "../Movement/TurnRightAction";
 
-
 export class PlayerCommandProcessor {
-  private player: Joueur;
+  private handler: JoueurCommandHandler;
 
-  constructor(player: Joueur) {
-    this.player = player;
+  constructor(handler: JoueurCommandHandler) {
+    this.handler = handler;
   }
 
   public processCommand(command: string): string {
@@ -29,6 +28,6 @@ export class PlayerCommandProcessor {
     };
 
     const action = commandActions[command];
-    return action ? action.execute(this.player) : "Commande invalide.";
+    return action ? action.execute(this.handler) : "Commande invalide.";
   }
 }

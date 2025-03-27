@@ -1,18 +1,22 @@
+// CombatCommandProcessor.ts
 import { CombatManager } from "../CombatManager/CombatManager";
 import { AttackAction } from "../CombatManager/AttackAction";
 import { DefendAction } from "../CombatManager/DefendAction";
 import { MonsterAttackAction } from "../CombatManager/MonsterAttackAction";
-import { Joueur } from "../Joueur/Joueur";
+import { JoueurCommandHandler } from "../Joueur/JoueurCommandHandler";
 import { ICombatAction } from "./ICombatAction";
 import { IMonsterAction } from "./IMonsterAction";
 
+/**
+ * Gère le traitement des commandes durant un combat.
+ */
 export class CombatCommandProcessor {
-  private player: Joueur;
+  private handler: JoueurCommandHandler;
   private combatActions: { [key: string]: ICombatAction };
   private monsterActions: IMonsterAction[];
 
-  constructor(player: Joueur) {
-    this.player = player;
+  constructor(handler: JoueurCommandHandler) {
+    this.handler = handler;
     this.combatActions = {
       "P": new AttackAction(),
       "M": new DefendAction(),
@@ -23,7 +27,7 @@ export class CombatCommandProcessor {
   }
 
   public processCommand(command: string): string {
-    const combatManager: CombatManager | null = this.player.getCombatManager();
+    const combatManager: CombatManager | null = this.handler.getCombatManager();
     if (!combatManager) return "Aucun combat en cours.";
     
     const actionKey = command.toUpperCase();
@@ -48,7 +52,7 @@ export class CombatCommandProcessor {
   private handleCombatEnd(combatManager: CombatManager, currentResult: string): string | null {
     if (combatManager.isCombatOver()) {
       const winner = combatManager.getWinner();
-      this.player.endCombat();
+      this.handler.endCombat();
       return currentResult + ` Combat terminé. Vainqueur : ${winner}.`;
     }
     return null;
